@@ -22,17 +22,22 @@ import SciChart
 class SCSAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //@BEGINDELETE
-        let licensing = String.init(format: "<LicenseContract>%@%@%@%@%@%@%@</LicenseContract>",
-                                            "<Customer>SciChart</Customer>",
-                                            "<OrderId>ABTSOFT-Dev-1</OrderId>",
-                                            "<LicenseCount>1</LicenseCount>",
-                                            "<IsTrialLicense>false</IsTrialLicense>",
-                                            "<SupportExpires>06/01/2018 00:00:00</SupportExpires>",
-                                            "<ProductCode>SC-IOS-2D-ENTERPRISE-SRC</ProductCode>",
-                                        "<KeyCode>651ac248797aad5dcb2c9e159d4665801c3d8421cbfe005e782261be491904bf0e83f013f4a631e7d81eca4c31bb54f4f864fddbcdc53251ba394a6a4ac7d9627744f889d4ead24ccf34766285bcbf3fce45342e118433ebcf308173456212e8fd0ed68853a3876d4228cccf65e80fc1c874661837d1b793cf80630efa5567db50e4d6ad13b0fa23d11f6345c60f65a0fb6caa6c750445e0077f3951aa3c5bc081497e3145</KeyCode>")
+        let licensing = String.init(format:
+            """
+<LicenseContract>
+<Customer>aleksey.moshkin@e-legion.com</Customer>
+<OrderId>Trial</OrderId>
+<LicenseCount>1</LicenseCount>
+<IsTrialLicense>true</IsTrialLicense>
+<SupportExpires>08/02/2019 00:00:00</SupportExpires>
+<ProductCode>SC-IOS-2D-ENTERPRISE-SRC</ProductCode>
+<KeyCode>6944e80ac03f96c7f46de2bf16259551788896e9316bd9891504f884c44fd40f947c58a242baa2b8f166d3d40344fcb1afd0af3a16ab8317f95098ac8cab6118af195f511467e48dd6f7e843ceddeab25d4bd416d3c8b12e136a0760807ebfb577afc86a70e51ed7ff2e2ceca4d6d414a5fc7bad7da8149300393ff371491e396f3019534c226334f4f125a36ab86e563913dc5dccbf9e2d6ac74e10d12c776d185f6b350d165c281597d5b860805d3c89bf</KeyCode>
+</LicenseContract>
+"""
+        )
         SCIChartSurface.setRuntimeLicenseKey(licensing)
         //@ENDDELETE
         SCIChartSurface.setDisplayLinkRunLoopMode(.commonModes)
