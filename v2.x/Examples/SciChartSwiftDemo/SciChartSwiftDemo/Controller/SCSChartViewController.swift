@@ -17,24 +17,63 @@
 import UIKit
 import SciChart
 
-class SCSChartViewController: UIViewController {
+class SCSChartContainerController: UIViewController {
     
     var viewClass : UIView.Type?
-    var chartView : UIView?
-
+    var chartVC : SCSChartViewController?
+    var timer: Timer?
+    
     func setupView(_ viewClass: UIView.Type) {
         self.viewClass = viewClass
-        self.chartView = viewClass.init()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    
+        if #available(iOS 10.0, *) {
+            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {
+                [weak self] (timer) in
+                
+                self?.chartVC?.willMove(toParentViewController: nil)
+                self?.chartVC?.view.removeFromSuperview()
+                self?.chartVC?.removeFromParentViewController()
+                self?.addChartViewController()
+            })
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer?.invalidate()
+    }
+    
+     private func addChartViewController() {
+        if chartVC == nil {
+            chartVC = SCSChartViewController()
+        }
+        addChildViewController(chartVC!)
         
-        chartView?.frame.size = view.frame.size
-        chartView?.frame.origin = CGPoint()
-        chartView?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        chartView?.translatesAutoresizingMaskIntoConstraints = true
+        view.addSubview(chartVC!.view)
+        chartVC!.setupView(viewClass!)
+        chartVC!.didMove(toParentViewController: self)
+    }
+}
+
+class SCSChartViewController: UIViewController {
+    
+    func setupView(_ viewClass: UIView.Type) {
+        let chartView = viewClass.init()
+        addChartView(chartView)
+    }
+    
+    private func addChartView(_ chartView: UIView) {
+        chartView.frame.size = view.frame.size
+        chartView.frame.origin = CGPoint()
+        chartView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        chartView.translatesAutoresizingMaskIntoConstraints = true
         
-        view.addSubview(chartView!)
+        view.addSubview(chartView)
     }
 }

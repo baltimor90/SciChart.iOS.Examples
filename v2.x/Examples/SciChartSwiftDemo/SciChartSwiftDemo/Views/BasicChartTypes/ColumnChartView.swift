@@ -169,6 +169,25 @@ class ColumnChartView: SingleChartLayout {
         }
         let drawLineAnnotation = createDrawLineAnnotation()
         surface.annotations.add(drawLineAnnotation)
+        for i in 0..<10 {
+            surface.annotations.add(createHorizontalAnnotation(y1: 0.5 + Double(i)))
+        }
+    }
+    
+    func createHorizontalAnnotation(y1: Double) -> SCILineAnnotation {
+        let horizontalLine = SCIHorizontalLineAnnotation()
+        horizontalLine.x1 = SCIGeneric(0)
+        horizontalLine.y1 = SCIGeneric(y1)
+        horizontalLine.horizontalAlignment = .right
+        horizontalLine.xAxisId = xAxisId
+        horizontalLine.yAxisId = yCandleAxisId
+        
+        let mainDashPattern: [NSNumber] = [1.1, 3.0, 1.1, 3.0]
+        horizontalLine.style.linePen = SCISolidPenStyle(color: .black, withThickness: 1.0, andStrokeDash: mainDashPattern)
+        let label = SCILineAnnotationLabel()
+        label.text = " TEXT !"
+        horizontalLine.add(label)
+        return horizontalLine
     }
     
     func createDrawLineAnnotation() -> SCILineAnnotation {

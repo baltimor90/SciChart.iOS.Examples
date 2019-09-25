@@ -71,7 +71,7 @@ class SCSListChartsController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowChartSegueId" {
          
-            if let chartController = segue.destination as? SCSChartViewController, let cell = sender as? UITableViewCell {
+            if let chartController = segue.destination as? SCSChartContainerController, let cell = sender as? UITableViewCell {
                 let indexPath = tableView.indexPath(for: cell)!
                 let className = "SciChartSwiftDemo."+itemsOfCategories[indexPath.section][indexPath.row].exampleClass
                 let chartViewClass = NSClassFromString(className) as! UIView.Type
